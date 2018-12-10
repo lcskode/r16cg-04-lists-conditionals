@@ -55,6 +55,24 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    // Don't show Persons Info since showPersons === false on state declaration
+    let persons = null;
+
+    // Show Persons when showPersons === true, this changes when Toggle Names button is clicked
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {/* Accessing persons data from state default values by using map */}
+          {this.state.persons.map(person => {
+            return <Person
+              name={person.name}
+              age={person.age}
+            />
+          })}          
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>My First React App</h1>
@@ -65,35 +83,10 @@ class App extends Component {
           onClick={this.togglePersonsHandler}
           >
           Toggle Names
-        </button>
-        {/* this will show or hide Persons info */}
-        { 
-          // show Persons info when showPerson === true
-          this.state.showPersons === true ? 
-            <div>
-              {/* Accessing state values */}
-              <Person 
-                name={this.state.persons[0].name} 
-                age={this.state.persons[0].age} 
-              />
-              <Person 
-                name={this.state.persons[1].name} 
-                age={this.state.persons[1].age} 
-                changed={this.inputNameHandler} 
-              />
-              <Person 
-                name={this.state.persons[2].name} 
-                age={this.state.persons[2].age}
-                // another way of passing value but bind is recommended
-                click={() => this.changeNamesHandler('JOCK JOCK JOCK')}
-                > 
-                My hobbies: coding and sleeping. 
-              </Person>
-            </div>
-          // hide Persons info when showPerson === false
-          : null
-        }
-        
+        </button>        
+
+        {persons}
+
       </div>
     );
   }
