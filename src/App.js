@@ -7,9 +7,9 @@ class App extends Component {
   // set default state
   state = {
     persons: [
-      {name: 'Jack', age: 21},
-      {name: 'Jill', age: 22},
-      {name: 'Rose', age: 23}
+      {id: 'aaa', name: 'Jack', age: 21},
+      {id: 'aab', name: 'Jill', age: 22},
+      {id: 'aac', name: 'Rose', age: 23}
     ],
     // set state for toggling persons information
     showPersons: false
@@ -64,6 +64,8 @@ class App extends Component {
           {/* Accessing persons data from state default values by using map */}
           {this.state.persons.map((person, index) => {
             return <Person
+              // key will help React update and render list efficiently
+              key={person.id}
               name={person.name}
               age={person.age}
               click={this.deletePersonHandler.bind(this, index)}
