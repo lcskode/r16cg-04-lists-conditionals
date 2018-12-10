@@ -26,8 +26,12 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-    // get all persons from default state
-    const persons = this.state.persons;
+    // get all persons from default state and create a new copy
+    // const persons = this.state.persons.slice();
+
+    // Use spread operatots instead to create a copy of persons array inside state
+    const persons = [...this.state.persons];
+
     // delete one person info when p element is clicked
     persons.splice(personIndex, 1);
     // then save all remaining persons info
