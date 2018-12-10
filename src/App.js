@@ -10,7 +10,9 @@ class App extends Component {
       {name: 'Jack', age: 21},
       {name: 'Jill', age: 22},
       {name: 'Rose', age: 23}
-    ]
+    ],
+    // set state for toggling persons information
+    showPersons: false
   }
 
   // event handler for Change Names button when clicked
@@ -37,6 +39,13 @@ class App extends Component {
     });
   }
 
+  togglePersonsHandler = () => {
+    // get showPersons value from state
+    const doesShow = this.state.showPersons;
+    // change value to show or hide persons info
+    this.setState({showPersons: !doesShow});
+  }
+
   render() {
     const style = {
       backgroundColor: '#eee',
@@ -51,29 +60,40 @@ class App extends Component {
         <h1>My First React App</h1>
          {/* Added onClick event for buttons and pass value by using bind */}
         <button
-          style={style} 
-          onClick={this.changeNamesHandler.bind(this, 'JACK JACK')}
-        >
-          Change Names
+          style={style}
+          // show or hide names when Toggle Names button is clicked
+          onClick={this.togglePersonsHandler}
+          >
+          Toggle Names
         </button>
-        {/* Accessing state values */}
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} 
-        />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age} 
-          changed={this.inputNameHandler} 
-        />
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}
-          // another way of passing value but bind is recommended
-          click={() => this.changeNamesHandler('JOCK JOCK JOCK')}
-          > 
-          My hobbies: coding and sleeping. 
-        </Person>     
+        {/* this will show or hide Persons info */}
+        { 
+          // show Persons info when showPerson === true
+          this.state.showPersons === true ? 
+            <div>
+              {/* Accessing state values */}
+              <Person 
+                name={this.state.persons[0].name} 
+                age={this.state.persons[0].age} 
+              />
+              <Person 
+                name={this.state.persons[1].name} 
+                age={this.state.persons[1].age} 
+                changed={this.inputNameHandler} 
+              />
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age}
+                // another way of passing value but bind is recommended
+                click={() => this.changeNamesHandler('JOCK JOCK JOCK')}
+                > 
+                My hobbies: coding and sleeping. 
+              </Person>
+            </div>
+          // hide Persons info when showPerson === false
+          : null
+        }
+        
       </div>
     );
   }
