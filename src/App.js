@@ -14,21 +14,7 @@ class App extends Component {
     // set state for toggling persons information
     showPersons: false
   }
-
-  // event handler for Change Names button when clicked
-  // set parameter newName
-  changeNamesHandler = (newName) => {
-    // console.log("Change Names button was clicked!");
-    // change names when Change Names button is clicked
-    this.setState({
-      persons: [
-        {name: newName, age: 21},
-        {name: 'JillJill', age: 22},
-        {name: 'RoseRose', age: 23}
-      ]
-    });
-  }
-
+  
   inputNameHandler = (event) => {
     this.setState({
       persons: [
@@ -37,6 +23,15 @@ class App extends Component {
         {name: 'RoseRose', age: 23}
       ]
     });
+  }
+
+  deletePersonHandler = (personIndex) => {
+    // get all persons from default state
+    const persons = this.state.persons;
+    // delete one person info when p element is clicked
+    persons.splice(personIndex, 1);
+    // then save all remaining persons info
+    this.setState({persons: persons});
   }
 
   togglePersonsHandler = () => {
@@ -63,12 +58,13 @@ class App extends Component {
       persons = (
         <div>
           {/* Accessing persons data from state default values by using map */}
-          {this.state.persons.map(person => {
+          {this.state.persons.map((person, index) => {
             return <Person
               name={person.name}
               age={person.age}
+              click={this.deletePersonHandler.bind(this, index)}
             />
-          })}          
+          })}
         </div>
       );
     }
