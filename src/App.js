@@ -15,14 +15,21 @@ class App extends Component {
     showPersons: false
   }
   
-  inputNameHandler = (event) => {
-    this.setState({
-      persons: [
-        {name: 'JackJack', age: 21},
-        {name: event.target.value, age: 22},
-        {name: 'RoseRose', age: 23}
-      ]
-    });
+  changeNameHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    })
+
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons});
   }
 
   deletePersonHandler = (personIndex) => {
@@ -69,6 +76,7 @@ class App extends Component {
               name={person.name}
               age={person.age}
               click={this.deletePersonHandler.bind(this, index)}
+              changed={(event) => this.changeNameHandler(event, person.id)}
             />
           })}
         </div>
@@ -84,7 +92,7 @@ class App extends Component {
           // show or hide names when Toggle Names button is clicked
           onClick={this.togglePersonsHandler}
           >
-          Toggle Names
+          Toggle Names 
         </button>        
 
         {persons}
